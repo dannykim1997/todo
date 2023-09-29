@@ -1,6 +1,6 @@
-import createHeader from "./header";
-import createSidebar from "./sidebar";
-import createTaskContainer from "./task-container";
+import createHeader from "./header.js";
+import showProjects from "./showProjects.js";
+import showTasks from "./showTasks.js";
 import './style.css'
 
 const content = document.getElementById('content');
@@ -12,7 +12,7 @@ content.appendChild(displayBody);
 export default displayBody;
 
 createHeader();
-createSidebar();
-createTaskContainer();
+showProjects();
+showTasks();
 
 console.log('src connected to dist!!');

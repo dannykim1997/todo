@@ -7,8 +7,6 @@ export default function createTaskContainer() {
     taskContainer.innerHTML = 'container';
 
     displayBody.appendChild(taskContainer);
-}
 
-function showTasks() {
-    
+    return taskContainer;
 }

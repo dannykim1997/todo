@@ -8,4 +8,6 @@ export default function createSidebar() {
     sidebar.innerHTML = 'Sidebar Here';
 
     content.appendChild(sidebar);
+
+    return sidebar;
 }
