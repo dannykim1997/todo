@@ -1,7 +1,11 @@
+body {
+    margin: 0;
+}
+
 #content {
     display: grid;
-    grid-template-columns: 1fr 5fr;
-    grid-template-rows: 1fr 5fr;
+    grid-template-columns: 1fr 6fr;
+    grid-template-rows: 1fr 6fr;
     height: 100vh;
     border: solid 2px black;
 }
@@ -25,4 +29,82 @@
     text-align: center;
     padding-top: 20px;
     border: solid 1px green;
+}
+
+.project-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background-color: white;
+    padding: 20px;
+
+    margin: 0 auto;
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    text-align: left;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.project-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.project-form input[type="text"],
+.project-form textarea,
+.project-form select {
+    width: 350px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.project-form button {
+    color: red;
+    margin: 10px;
+}
+
+.task-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background-color: white;
+    padding: 20px;
+
+    margin: 0 auto;
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    text-align: left;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.task-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.task-form input[type="text"],
+.task-form textarea,
+.task-form select {
+    width: 350px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.task-form button {
+    color: red;
+    margin: 10px;
 }
