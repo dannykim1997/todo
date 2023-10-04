@@ -1,55 +1,78 @@
 import './style.css'
 import { enableTaskFormButton } from './taskContainer.js';
+import { myProjects } from './showProjects.js';
+import { createTask } from './showTasks';
 
 export default function createTaskForm() {
-    const taskForm = document.createElement('div');
+    let taskForm = document.createElement('div');
     taskForm.classList.add('task-form');
 
-    const titleLabel = document.createElement('label');
+    let titleLabel = document.createElement('label');
     titleLabel.textContent = 'Title:';
     titleLabel.setAttribute('for', 'task-title');
-    const titleInput = document.createElement('input');
+    let titleInput = document.createElement('input');
     titleInput.type = 'text';
     titleInput.id = 'task-title';
     titleInput.name = 'task-title';
 
-    const descriptionLabel = document.createElement('label');
-    descriptionLabel.textContent = 'Description:';
-    descriptionLabel.setAttribute('for', 'task-description');
-    const descriptionInput = document.createElement('textarea');
-    descriptionInput.id = 'task-description';
-    descriptionInput.name = 'task-description';
-
-    const dueDateLabel = document.createElement('label');
+    let dueDateLabel = document.createElement('label');
     dueDateLabel.textContent = 'Due Date:';
-    dueDateLabel.setAttribute('for', 'task-dueDate');
-    const dueDateInput = document.createElement('input');
+    dueDateLabel.setAttribute('for', 'task-due-date');
+    let dueDateInput = document.createElement('input');
     dueDateInput.type = 'date';
-    dueDateInput.id = 'task-dueDate';
-    dueDateInput.name = 'task-dueDate';
+    dueDateInput.id = 'task-due-date';
+    dueDateInput.name = 'task-due-date';
 
-    const priorityLabel = document.createElement('label');
+    let priorityLabel = document.createElement('label');
     priorityLabel.textContent = 'Priority:';
     priorityLabel.setAttribute('for', 'task-priority');
-    const priorityInput = document.createElement('select');
-    priorityInput.id = 'task-priority';
-    priorityInput.name = 'task-priority';
+    let prioritySelect = document.createElement('select');
+    prioritySelect.id = 'task-priority';
+    prioritySelect.name = 'task-priority';
 
-    const addButton = document.createElement('button');
+    let priorityOptions = ['High', 'Medium', 'Low'];
+
+    priorityOptions.forEach((priority) => {
+        let option = document.createElement('option');
+        option.value = priority;
+        option.textContent = priority;
+        prioritySelect.appendChild(option);
+    });
+
+    let projectLabel = document.createElement('label');
+    projectLabel.textContent = 'Project:';
+    projectLabel.setAttribute('for', 'task-project');
+    let projectSelect = document.createElement('select');
+    projectSelect.id = 'task-project';
+    projectSelect.name = 'task-project';
+
+    myProjects.forEach((project) => {
+        let option = document.createElement('option');
+        option.value = project.id;
+        option.textContent = project.projectTitle;
+        projectSelect.appendChild(option);
+    });
+
+    let addButton = document.createElement('button');
     addButton.textContent = 'Add Project';
+    addButton.addEventListener('click', function() {
+        let projectSelect = document.getElementById('task-project');
+        let selectedProjectId = projectSelect.value;
+        createTask(selectedProjectId);
+    });
 
-    const cancelButton = document.createElement('button');
+    let cancelButton = document.createElement('button');
     cancelButton.textContent = 'Cancel';
     cancelButton.onclick = enableTaskFormButton;
 
     taskForm.appendChild(titleLabel);
     taskForm.appendChild(titleInput);
-    taskForm.appendChild(descriptionLabel);
-    taskForm.appendChild(descriptionInput);
     taskForm.appendChild(dueDateLabel);
     taskForm.appendChild(dueDateInput);
     taskForm.appendChild(priorityLabel);
-    taskForm.appendChild(priorityInput);
+    taskForm.appendChild(prioritySelect);
+    taskForm.appendChild(projectLabel);
+    taskForm.appendChild(projectSelect);
     taskForm.appendChild(addButton);
     taskForm.appendChild(cancelButton);
 

@@ -1,11 +1,11 @@
 import './style.css'
 
-const content = document.getElementById('content');
+let content = document.getElementById('content');
 
 export default function createSidebar() {
-    const sidebar = document.createElement('div');
+    let sidebar = document.createElement('div');
     sidebar.classList.add('sidebar');
-    sidebar.innerHTML = 'Sidebar Here';
+    sidebar.innerHTML = 'Projects';
 
     content.appendChild(sidebar);
 
