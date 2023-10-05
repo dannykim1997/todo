@@ -13,13 +13,6 @@ export default function createProjectForm() {
     titleInput.id = 'project-title';
     titleInput.name = 'project-title';
 
-    // let descriptionLabel = document.createElement('label');
-    // descriptionLabel.textContent = 'Description:';
-    // descriptionLabel.setAttribute('for', 'project-description');
-    // let descriptionInput = document.createElement('textarea');
-    // descriptionInput.id = 'project-description';
-    // descriptionInput.name = 'project-description';
-
     let addButton = document.createElement('button');
     addButton.textContent = 'Add Project';
     addButton.onclick = createProject;
@@ -30,8 +23,6 @@ export default function createProjectForm() {
 
     projectForm.appendChild(titleLabel);
     projectForm.appendChild(titleInput);
-    // projectForm.appendChild(descriptionLabel);
-    // projectForm.appendChild(descriptionInput);
     projectForm.appendChild(addButton);
     projectForm.appendChild(cancelButton);
 

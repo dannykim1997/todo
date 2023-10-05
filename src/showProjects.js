@@ -10,7 +10,6 @@ export let myProjects = [
     {
         id: 1,
         projectTitle: "Default"
-        // projectDescription: "Default Projects"
     }
 ];
 
@@ -31,14 +30,11 @@ export default function showProjects() {
     myProjects.forEach((project) => {
         let projectCard = document.createElement('div');
         let projectTitle = document.createElement('div');
-        // let projectDescription = document.createElement('div');
         
         projectCard.classList.add('project-card');
         projectTitle.classList.add('project-title');
-        // projectDescription.classList.add('project-description');
 
         projectTitle.innerHTML = project.projectTitle;
-        // projectDescription.innerHTML = project.projectDescription;
        
         project.id = projectIdCounter++;
         projectCard.dataset.projectId = project.id;
@@ -54,11 +50,11 @@ export default function showProjects() {
     })
 
     return projectFormButton, projectsContainer
-};
+}
 
 export function disableProjectFormButton() {
     projectFormButton.disabled = true;
-};
+}
 
 export function enableProjectFormButton() {
     projectFormButton.disabled = false;
@@ -67,7 +63,7 @@ export function enableProjectFormButton() {
     if (projectForm) {
         projectForm.remove();
     }
-};
+}
 
 export function showProjectForm() {
     disableProjectFormButton();
@@ -75,18 +71,16 @@ export function showProjectForm() {
     let projectForm = createProjectForm();
     content.appendChild(projectForm);
     projectForm.style.display = 'block';
-};
+}
 
 function Project(id, projectTitle) {
     this.id = id;
     this.projectTitle = projectTitle;
-    // this.projectDescription = projectDescription;
-};
+}
 
 export function createProject() {
     let newProjectId = Math.max(...myProjects.map(project => project.id), 0) + 1;
     let projectTitle = document.querySelector('#project-title').value;
-    // let projectDescription = document.querySelector('#project-description').value;
     
     let newProject = new Project(newProjectId, projectTitle);
 
@@ -99,22 +93,19 @@ export function createProject() {
     clearProjects();
     updateProjectsContainer();
     enableProjectFormButton();
-};
+}
 
 export function updateProjectsContainer() {
     myProjects.forEach((project) => {
         let projectCard = document.createElement('div');
         let projectTitle = document.createElement('div');
-        // let projectDescription = document.createElement('div');
         
         projectTitle.dataset.projectId = project.id;
 
         projectCard.classList.add('project-card');
         projectTitle.classList.add('project-title');
-        // projectDescription.classList.add('project-description');
 
         projectTitle.innerHTML = project.projectTitle;
-        // projectDescription.innerHTML = project.projectDescription;
 
         projectsContainer.appendChild(projectCard);
         projectCard.appendChild(projectTitle);
@@ -127,10 +118,10 @@ export function updateProjectsContainer() {
             displayTasks(projectId);
         }
     })
-};
+}
 
 export function clearProjects() {
     while(projectsContainer.hasChildNodes()) {
         projectsContainer.removeChild(projectsContainer.firstChild)
     }
-};
+}

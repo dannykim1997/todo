@@ -1,7 +1,7 @@
 import './style.css'
 import displayBody from './index.js'
 import createTaskForm from './taskForm.js';
-import { myTasks, taskIdCounter, deleteTask } from './showTasks.js';
+import { deleteTask, editTask, isEditFormOpen, taskIdCounter, myTasks } from './showTasks.js';
 
 let taskContainer = document.createElement('div');
 taskContainer.classList.add('task-container');
@@ -20,7 +20,7 @@ export default function createTaskContainer() {
 
 export function disableTaskFormButton() {
     addTaskButton.disabled = true;
-};
+}
 
 export function enableTaskFormButton() {
     addTaskButton.disabled = false;
@@ -29,7 +29,7 @@ export function enableTaskFormButton() {
     if (taskForm) {
         taskForm.remove();
     }
-};
+}
 
 export function showTaskForm() {
     disableTaskFormButton();
@@ -37,7 +37,7 @@ export function showTaskForm() {
     let taskForm = createTaskForm();
     displayBody.appendChild(taskForm);
     taskForm.style.display = 'block';
-};
+}
 
 export function clearTasks() {
     while(taskContainer.hasChildNodes()) {
@@ -48,22 +48,32 @@ export function clearTasks() {
 export function updateTaskContainer(projectId) {
     let taskContainer = document.querySelector('.task-container');
     let projectTasks = myTasks.filter((task) => task.projectId === parseInt(projectId));
+    
+    console.log(projectTasks);
 
     projectTasks.forEach((task) => {
         let taskCard = document.createElement('div');
         let taskTitle = document.createElement('div');
         let taskDueDate = document.createElement('div');
         let taskPriority = document.createElement('div');
-        let taskDeleteButton = document.createElement('div');
+        let taskEditButton = document.createElement('button');
+        let taskDeleteButton = document.createElement('button');
 
         taskCard.classList.add('task-card');
         taskTitle.classList.add('task-title');
         taskDueDate.classList.add('task-due-date');
         taskPriority.classList.add('task-priority');
+        taskEditButton.classList.add('task-edit-button');
         taskDeleteButton.classList.add('task-delete-button');
 
         task.id = taskIdCounter++;
         taskCard.dataset.taskId = task.id; 
+
+        taskEditButton.addEventListener('click', () => {
+            if (!isEditFormOpen) {
+            editTask(task.id, taskEditButton);
+            }
+        })
 
         taskDeleteButton.addEventListener('click', () => {
             console.log(`click ${task.id}`)
@@ -72,13 +82,15 @@ export function updateTaskContainer(projectId) {
 
         taskTitle.innerHTML = `Task: ${task.title}`;
         taskDueDate.innerHTML = `Due Date: ${task.dueDate}`;
-        taskPriority.innerHTML = `Priority: ${task.priority}`;        
+        taskPriority.innerHTML = `Priority: ${task.priority}`;
+        taskEditButton.innerHTML = 'EDIT';        
         taskDeleteButton.innerHTML = 'X';
 
         taskContainer.appendChild(taskCard);
         taskCard.appendChild(taskTitle);
         taskCard.appendChild(taskDueDate);
         taskCard.appendChild(taskPriority);
+        taskCard.appendChild(taskEditButton);
         taskCard.appendChild(taskDeleteButton);
     })
 }

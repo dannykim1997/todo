@@ -1,7 +1,8 @@
 import './style.css'
 import createTaskContainer from './taskContainer.js';
-import { enableTaskFormButton, disableTaskFormButton, clearTasks, updateTaskContainer } from './taskContainer.js';
-import { clearProjects, updateProjectsContainer, enableProjectFormButton } from './showProjects';
+import { enableTaskFormButton, clearTasks, updateTaskContainer } from './taskContainer.js';
+import createEditTaskForm from './editTaskForm';
+import displayBody from './index.js'
 
 export let taskIdCounter = 1;
 export let myTasks = [
@@ -19,28 +20,14 @@ export let myTasks = [
         dueDate: "2023-09-16",
         priority: "Low",
     }
-    // {
-    //     id: 3,
-    //     projectId: 2,
-    //     title: "Finish the report",
-    //     dueDate: "2023-09-20",
-    //     priority: "High",
-    // },
-    // {
-    //     id: 4,
-    //     projectId: 2,
-    //     title: "Attend the meeting",
-    //     dueDate: "2023-09-18",
-    //     priority: "Medium",
-    // },
 ];
 
+export let isEditFormOpen = false;
 
 export default function showTasks() {
     let taskContainer = createTaskContainer();
-
     return taskContainer
-};
+}
 
 export function displayTasks(projectId) {
     let taskContainer = document.querySelector('.task-container');
@@ -55,24 +42,32 @@ export function displayTasks(projectId) {
         let taskTitle = document.createElement('div');
         let taskDueDate = document.createElement('div');
         let taskPriority = document.createElement('div');
-        let taskDeleteButton = document.createElement('div');
+        let taskEditButton = document.createElement('button');
+        let taskDeleteButton = document.createElement('button'); 
 
         taskCard.classList.add('task-card');
         taskTitle.classList.add('task-title');
         taskDueDate.classList.add('task-due-date');
         taskPriority.classList.add('task-priority');
+        taskEditButton.classList.add('task-edit-button');
         taskDeleteButton.classList.add('task-delete-button');
 
         taskTitle.innerHTML = `Task: ${task.title}`;
         taskDueDate.innerHTML = `Due Date: ${task.dueDate}`;
         taskPriority.innerHTML = `Priority: ${task.priority}`;
+        taskEditButton.innerHTML = 'EDIT';
         taskDeleteButton.innerHTML = 'X';
 
         task.id = taskIdCounter++;
         taskCard.dataset.taskId = task.id;        
 
+        taskEditButton.addEventListener('click', () => {
+            if (!isEditFormOpen) {
+            editTask(task.id, taskEditButton);
+            }
+        })
+
         taskDeleteButton.addEventListener('click', () => {
-            console.log(`click ${task.id}`)
             deleteTask(task.id);
         })
 
@@ -80,9 +75,10 @@ export function displayTasks(projectId) {
         taskCard.appendChild(taskTitle);
         taskCard.appendChild(taskDueDate);
         taskCard.appendChild(taskPriority);
+        taskCard.appendChild(taskEditButton);
         taskCard.appendChild(taskDeleteButton);
     })
-};
+}
 
 function Task(id, projectId, title, dueDate, priority) {
     this.id = id;
@@ -90,7 +86,7 @@ function Task(id, projectId, title, dueDate, priority) {
     this.title = title;
     this.dueDate = dueDate;
     this.priority = priority;
-};
+}
 
 export function createTask(projectId) {
     let taskId = Math.max(...myTasks.map(task => task.id), 0) + 1;
@@ -111,12 +107,51 @@ export function createTask(projectId) {
     clearTasks();
     enableTaskFormButton();
     updateTaskContainer(projectId);
-};
+}
+
+
+export function editTask(taskId, taskEditButton) {
+    isEditFormOpen = true;
+    disableEditTaskFormButton(taskEditButton);
+
+    let editTaskForm = createEditTaskForm(taskId, taskEditButton);
+    displayBody.appendChild(editTaskForm);
+    editTaskForm.style.display = 'block';
+}
+
+export function disableEditTaskFormButton(taskEditButton) {
+    taskEditButton.disabled = true;
+}
+
+export function enableEditTaskFormButton(taskEditButton) {
+    taskEditButton.disabled = false;
+
+    let editTaskFormForm = document.querySelector('.edit-task-form');
+    if (editTaskFormForm) {
+        editTaskFormForm.remove();
+    }
+}
+
+export function saveEditedTask(taskId, taskEditButton) {
+    isEditFormOpen = false;
+    let editedTaskIndex = myTasks.findIndex((task) => task.id === taskId);
+
+    if (editedTaskIndex !== -1) {
+       
+        myTasks[editedTaskIndex].title = document.querySelector('#edit-task-title').value;
+        myTasks[editedTaskIndex].dueDate = document.querySelector('#edit-task-due-date').value;
+        myTasks[editedTaskIndex].priority = document.querySelector('#edit-task-priority').value;
+        
+        clearTasks();
+        enableEditTaskFormButton(taskEditButton);
+        updateTaskContainer(myTasks[editedTaskIndex].projectId);
+    }
+}
 
 export function deleteTask(taskId) {
     myTasks = myTasks.filter(task => task.id !== taskId);
     removeTaskFromContainer(taskId);
-};
+}
 
 export function removeTaskFromContainer(taskId) {
     let taskContainer = document.querySelector('.task-container');
@@ -124,4 +159,4 @@ export function removeTaskFromContainer(taskId) {
     if (taskCard) {
         taskContainer.removeChild(taskCard);
     }
-};
+}
