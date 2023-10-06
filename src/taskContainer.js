@@ -6,12 +6,17 @@ import { deleteTask, editTask, isEditFormOpen, taskIdCounter, myTasks } from './
 let taskContainer = document.createElement('div');
 taskContainer.classList.add('task-container');
 
+export let projectHeaderContainer = document.createElement('div');
+projectHeaderContainer.classList.add('project-header')
+projectHeaderContainer.innerHTML = 'Select Project:';
+
 let addTaskButton = document.createElement('button');
 addTaskButton.classList.add('add-task-button');
 addTaskButton.innerHTML = 'Add New Task';
 addTaskButton.onclick = showTaskForm;
 
 export default function createTaskContainer() {
+    displayBody.appendChild(projectHeaderContainer);
     displayBody.appendChild(addTaskButton);
     displayBody.appendChild(taskContainer);
 
@@ -48,8 +53,6 @@ export function clearTasks() {
 export function updateTaskContainer(projectId) {
     let taskContainer = document.querySelector('.task-container');
     let projectTasks = myTasks.filter((task) => task.projectId === parseInt(projectId));
-    
-    console.log(projectTasks);
 
     projectTasks.forEach((task) => {
         let taskCard = document.createElement('div');
@@ -93,4 +96,22 @@ export function updateTaskContainer(projectId) {
         taskCard.appendChild(taskEditButton);
         taskCard.appendChild(taskDeleteButton);
     })
+}
+
+export function changeProjectHeader(projectId, projectHeader) {
+    let projectHeaderTitle = projectHeader.innerHTML;
+    console.log(projectId);
+    console.log(projectHeader);
+    // if(typeof projectId === 'number' && !isNaN(num)) {    
+    //     projectHeaderContainer.innerHTML = 'Select Project';
+    // } else {
+    //     let projectHeaderTitle = projectHeader.innerHTML;
+    //     projectHeaderContainer.innerHTML = `Project ${projectHeaderTitle}`;
+    // }
+    projectHeaderContainer.innerHTML = `Project ${projectHeaderTitle}`;
+}
+
+export function resetHeader() {
+    console.log(projectHeaderContainer);
+    projectHeaderContainer.innerHTML = 'Select Project:';
 }

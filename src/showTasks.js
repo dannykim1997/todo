@@ -1,16 +1,41 @@
 import './style.css'
 import createTaskContainer from './taskContainer.js';
-import { enableTaskFormButton, clearTasks, updateTaskContainer } from './taskContainer.js';
+import { enableTaskFormButton, clearTasks, updateTaskContainer, changeProjectHeader } from './taskContainer.js';
 import createEditTaskForm from './editTaskForm';
 import displayBody from './index.js'
 
 export let taskIdCounter = 1;
-export let myTasks = [];
+export let myTasks = [
+    {
+        id: 1,
+        projectId: 1,
+        title: 'Test',
+        dueDate: '2023-10-06',
+        priority: 'High'
+    },
+    {
+        id: 2,
+        projectId: 2,
+        title: 'Eggs',
+        dueDate: '2023-10-06',
+        priority: 'Low'
+    },
+    {
+        id: 3,
+        projectId: 2,
+        title: 'Bread',
+        dueDate: '2023-10-06',
+        priority: 'Low'
+    },
+    {
+        id: 4,
+        projectId: 3,
+        title: 'Report',
+        dueDate: '2023-10-07',
+        priority: 'Medium'
+    },
+];
 
-if (localStorage.getItem('myTasks')) {
-    myTasks = JSON.parse(localStorage.getItem('myTasks'));
-    taskIdCounter = Math.max(...myTasks.map(task => task.id), 0) + 1;
-}
 
 export let isEditFormOpen = false;
 
@@ -22,7 +47,7 @@ export default function showTasks() {
 export function displayTasks(projectId) {
     let taskContainer = document.querySelector('.task-container');
     let projectTasks = myTasks.filter((task) => task.projectId === parseInt(projectId));
-    
+
     while (taskContainer.firstChild) {
         taskContainer.removeChild(taskContainer.firstChild);
     }
@@ -59,8 +84,6 @@ export function displayTasks(projectId) {
 
         taskDeleteButton.addEventListener('click', () => {
             deleteTask(task.id);
-
-            // localStorage.setItem('myTasks', JSON.stringify(myTasks));
         })
 
         taskContainer.appendChild(taskCard);
@@ -85,6 +108,8 @@ export function createTask(projectId) {
     let taskTitle = document.querySelector('#task-title').value;
     let taskDueDate = document.querySelector('#task-due-date').value;
     let taskPriority = document.querySelector('#task-priority').value;
+    let taskProject = document.getElementById('task-project');
+    let selectedOption = taskProject.options[taskProject.selectedIndex];
 
     projectId = parseInt(projectId);
 
@@ -96,11 +121,11 @@ export function createTask(projectId) {
     }
 
     myTasks.push(newTask);
+
     clearTasks();
     enableTaskFormButton();
     updateTaskContainer(projectId);
-
-    localStorage.setItem('myTasks', JSON.stringify(myTasks));
+    changeProjectHeader(projectId, selectedOption);
 }
 
 
@@ -118,8 +143,9 @@ export function disableEditTaskFormButton(taskEditButton) {
 }
 
 export function enableEditTaskFormButton(taskEditButton) {
+    isEditFormOpen = false;
     taskEditButton.disabled = false;
-
+    
     let editTaskFormForm = document.querySelector('.edit-task-form');
     if (editTaskFormForm) {
         editTaskFormForm.remove();
@@ -139,16 +165,13 @@ export function saveEditedTask(taskId, taskEditButton) {
         clearTasks();
         enableEditTaskFormButton(taskEditButton);
         updateTaskContainer(myTasks[editedTaskIndex].projectId);
-
-        localStorage.setItem('myTasks', JSON.stringify(myTasks));
     }
 }
 
 export function deleteTask(taskId) {
     myTasks = myTasks.filter(task => task.id !== taskId);
-    removeTaskFromContainer(taskId);
 
-    localStorage.setItem('myTasks', JSON.stringify(myTasks));
+    removeTaskFromContainer(taskId);
 }
 
 export function removeTaskFromContainer(taskId) {

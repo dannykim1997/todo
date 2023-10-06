@@ -108,3 +108,11 @@ body {
     color: red;
     margin: 10px;
 }
+
+.project-card {
+    border: solid 1px red;
+}
+
+.task-card {
+    border: solid 1px blue;
+}

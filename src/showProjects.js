@@ -2,6 +2,7 @@ import './style.css'
 import createSidebar from './sidebar.js'
 import createProjectForm from './projectForm.js';
 import { displayTasks, myTasks, deleteTask } from './showTasks.js';
+import { changeProjectHeader, resetHeader } from './taskContainer.js';
 
 let content = document.getElementById('content');
 
@@ -10,6 +11,14 @@ export let myProjects = [
     {
         id: 1,
         projectTitle: "Default"
+    },
+    {
+        id: 2,
+        projectTitle: "Cooking"
+    },
+    {
+        id: 3,
+        projectTitle: "Work"
     }
 ];
 
@@ -20,11 +29,6 @@ let projectFormButton = document.createElement('button');
 projectFormButton.classList.add('project-form-button');
 projectFormButton.textContent = 'Add Project';
 projectFormButton.onclick = showProjectForm;
-
-if(localStorage.getItem('myProjects')) {
-    myProjects = JSON.parse(localStorage.getItem('myProjects'));
-    updateProjectsContainer();
-}
 
 export default function showProjects() {
     let sidebar = createSidebar();
@@ -43,27 +47,28 @@ export default function showProjects() {
 
         projectCard.classList.add('project-card');
         projectTitle.classList.add('project-title');
-        deleteProjectButton.classList.add('.delete-project-button');
+        deleteProjectButton.classList.add('delete-project-button');
 
         projectTitle.innerHTML = project.projectTitle;
         deleteProjectButton.innerHTML = 'X';
 
         project.id = projectIdCounter++;
-        projectCard.dataset.projectId = project.id;
+        // projectCard.dataset.projectId = project.id;
+        projectTitle.dataset.projectId = project.id;
 
         projectsContainer.appendChild(projectCard);
         projectCard.appendChild(projectTitle);
         projectCard.appendChild(deleteProjectButton);
 
-        projectCard.addEventListener('click', () => {
-            const projectId = projectCard.dataset.projectId;
-            
+        projectTitle.addEventListener('click', () => {
+            //let projectId = projectCard.dataset.projectId;
+            let projectId = projectTitle.dataset.projectId;
             displayTasks(projectId);
+            changeProjectHeader(projectId, projectTitle);
         });
 
         deleteProjectButton.addEventListener('click', () => {
             deleteProject(project.id);
-            console.log(project.id);
         })
     })
 
@@ -111,8 +116,6 @@ export function createProject() {
     clearProjects();
     updateProjectsContainer();
     enableProjectFormButton();
-
-    localStorage.setItem('myProjects', JSON.stringify(myProjects));
 }
 
 export function updateProjectsContainer() {
@@ -122,6 +125,7 @@ export function updateProjectsContainer() {
         let deleteProjectButton = document.createElement('button');
 
         projectTitle.dataset.projectId = project.id;
+        //projectCard.dataset.projectId = project.id;
 
         projectCard.classList.add('project-card');
         projectTitle.classList.add('project-title');
@@ -134,20 +138,34 @@ export function updateProjectsContainer() {
         projectCard.appendChild(projectTitle);
         projectCard.appendChild(deleteProjectButton);
 
+        // projectCard.addEventListener('click', (e) => {
+        //     let projectId = e.target.dataset.projectId;
+    
+        //     if(projectId) {
+        //         displayTasks(projectId);
+        //         changeProjectHeader(projectTitle);
+        //     }
+        // })
+
+        projectTitle.addEventListener('click', () => {
+            // let projectId = projectCard.dataset.projectId;
+            let projectId = projectTitle.dataset.projectId;
+            displayTasks(projectId);
+            changeProjectHeader(projectId, projectTitle);
+        });
+
         deleteProjectButton.addEventListener('click', () => {
             deleteProject(project.id);
-            console.log(project.id);
         })
-
     })
 
-    projectsContainer.addEventListener('click', (e) => {
-        let projectId = e.target.dataset.projectId;
+    // projectsContainer.addEventListener('click', (e) => {
+    //     let projectId = e.target.dataset.projectId;
 
-        if(projectId) {
-            displayTasks(projectId);
-        }
-    })
+    //     if(projectId) {
+    //         displayTasks(projectId);
+    //     }
+    // })
 }
 
 export function clearProjects() {
@@ -158,15 +176,13 @@ export function clearProjects() {
 
 export function deleteProject(projectId) {
     const tasksToDelete = myTasks.filter((task) => task.projectId === projectId);
-
+    
     tasksToDelete.forEach((task) => {
         deleteTask(task.id); 
     });
 
     myProjects = myProjects.filter((project) => project.id !== projectId);
-
+    resetHeader();
     clearProjects();
     updateProjectsContainer();
-
-    localStorage.setItem('myProjects', JSON.stringify(myProjects));
 }

@@ -44,14 +44,16 @@ export default function createEditTaskForm(taskId, taskEditButton) {
 
     let saveButton = document.createElement('button');
     saveButton.textContent = 'Save Changes';
-    saveButton.addEventListener('click', function() {
+    saveButton.addEventListener('click', () => {
         saveEditedTask(taskId, taskEditButton);
     });
 
     let cancelButton = document.createElement('button');
     cancelButton.textContent = 'Cancel';
-    cancelButton.onclick = enableEditTaskFormButton;
-
+    cancelButton.addEventListener('click', () => {
+        enableEditTaskFormButton(taskEditButton);
+    })
+    
     editTaskForm.appendChild(editTitleLabel);
     editTaskForm.appendChild(editTitleInput);
     editTaskForm.appendChild(editDueDateLabel);
