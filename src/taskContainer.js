@@ -99,7 +99,7 @@ export function updateTaskContainer(projectId) {
 
 export function changeProjectHeader(projectHeader) {
     let projectHeaderTitle = projectHeader.innerHTML;
-    projectHeaderContainer.innerHTML = `Project ${projectHeaderTitle}`;
+    projectHeaderContainer.innerHTML = `${projectHeaderTitle}`;
 }
 
 export function resetHeader() {

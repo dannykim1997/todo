@@ -10,25 +10,129 @@ body {
     border: solid 2px black;
 }
 
-.header {
+.header-wrapper {
     grid-area: 1/1/2/3;
-    border: solid 1px red;
-    text-align: center;
-    padding-top: 40px;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    font-size: 48px;
+    color: white;
 }
 
 .display-body {
     grid-area: 2/2/3/3;
     text-align: center;
     padding-top: 20px;
-    border: solid 1px blue;
+    background-color: lightgray;
 }
 
 .sidebar {
     grid-area: 2/1/3/2;
     text-align: center;
     padding-top: 20px;
-    border: solid 1px green;
+    background-color: gray;
+    font-size: 28px;
+}
+
+
+.projects-text {
+    color: white;
+}
+
+.project-form-button {
+    margin-bottom: 10px;
+    border-radius: 6px;
+    background-color: red;
+    color: white;
+}
+
+.projects {
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+}
+
+.project-card {
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: solid 2px red;
+    background-color: white;
+    border-radius: 6px;
+}
+
+.project-title {
+    flex: 1;
+    color: red;
+}
+
+.delete-project-button {
+    border-radius: 6px;
+    font-weight: bold;
+    color: red;
+}
+
+.project-header {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: red;
+}
+
+.add-task-button {
+    border-radius: 6px;
+    background-color: white;
+    color: red;
+}
+
+.task-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.task-card {
+    flex: 1;
+    max-width: 300px;
+    min-width: 300px;
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+    border: solid 2px red;
+    border-radius: 6px;
+}
+
+.task-title {
+    word-wrap: break-word;
+    overflow-y: scroll;
+    max-height: 80px;
+    margin-bottom: 5px;
+}
+
+.task-due-date {
+    margin-bottom: 5px;
+}
+
+.task-priority {
+    margin-bottom: 5px;
+}
+
+.task-edit-button {
+    margin: 5px;
+    border-radius: 6px;
+    border: solid 2px red;
+}
+
+.task-delete-button {
+    margin: 5px;
+    border-radius: 6px;
+    color: red;
+    font-weight: bold;
 }
 
 .project-form {
@@ -56,7 +160,7 @@ body {
 }
 
 .project-form input[type="text"],
-.project-form textarea,
+.project-form text,
 .project-form select {
     width: 350px;
     padding: 10px;
@@ -70,7 +174,7 @@ body {
     margin: 10px;
 }
 
-.task-form {
+.task-form, .edit-task-form {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -88,15 +192,18 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.task-form label {
+.task-form label, .edit-task-form label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
 .task-form input[type="text"],
-.task-form textarea,
-.task-form select {
+.task-form text,
+.task-form select,
+.edit-task-form input[type="text"],
+.edit-task-form textarea,
+.edit-task-form select {
     width: 350px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -104,15 +211,7 @@ body {
     font-size: 16px;
 }
 
-.task-form button {
+.task-form button, .edit-task-form button {
     color: red;
     margin: 10px;
-}
-
-.project-card {
-    border: solid 1px red;
-}
-
-.task-card {
-    border: solid 1px blue;
 }

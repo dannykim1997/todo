@@ -8,9 +8,10 @@ export default function createEditTaskForm(taskId, taskEditButton) {
     editTaskForm.classList.add('edit-task-form');
 
     let editTitleLabel = document.createElement('label');
-    editTitleLabel.textContent = 'Task:';
+    editTitleLabel.textContent = 'Edit Task:';
     editTitleLabel.setAttribute('for', 'edit-task-title');
     let editTitleInput = document.createElement('input');
+
     editTitleInput.type = 'text';
     editTitleInput.id = 'edit-task-title';
     editTitleInput.name = 'edit-task-title';
@@ -52,7 +53,6 @@ export default function createEditTaskForm(taskId, taskEditButton) {
     editTaskForm.addEventListener('keydown', (e) => {
         if(e.key === 'Enter') {
             saveButton.click()
-            //editTaskForm.querySelector('button[type="submit"]').click();
         }
     })
 

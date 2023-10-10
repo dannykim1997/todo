@@ -8,9 +8,10 @@ export default function createTaskForm() {
     taskForm.classList.add('task-form');
 
     let titleLabel = document.createElement('label');
-    titleLabel.textContent = 'Task:';
+    titleLabel.textContent = 'New Task:';
     titleLabel.setAttribute('for', 'task-title');
     let titleInput = document.createElement('input');
+
     titleInput.type = 'text';
     titleInput.id = 'task-title';
     titleInput.name = 'task-title';

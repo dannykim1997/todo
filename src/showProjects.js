@@ -19,6 +19,11 @@ projectFormButton.onclick = showProjectForm;
 export default function showProjects() {
     let sidebar = createSidebar();
 
+    let projectsText = document.createElement('div');
+    projectsText.classList.add('projects-text');
+    projectsText.textContent = 'Projects';
+    
+    sidebar.appendChild(projectsText);
     sidebar.appendChild(projectFormButton);
     sidebar.appendChild(projectsContainer);
 
@@ -146,7 +151,7 @@ export function deleteProject(projectId) {
     let currentProjectDisplay = currentProject.innerHTML;
 
     let selectedProject = document.querySelector(`[data-project-id="${projectId}"]`);
-    let selectedProjectTitle = `Project ${selectedProject.innerHTML}`;
+    let selectedProjectTitle = `${selectedProject.innerHTML}`;
 
     let tasksToDelete = myTasks.filter((task) => task.projectId === projectId);
 
